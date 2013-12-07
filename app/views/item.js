@@ -8,11 +8,18 @@ define([
 
     return Backbone.View.extend({
         template: _.template(template),
+
         tagName: 'li',
 
+        events: {
+            'click .toggle': 'toggleCompleted'
+        },
+
         initialize: function () {
-            _.bindAll(this, 'render', 'toggleVisible', 'isHidden');
+            _.bindAll(this, 'render', 'toggleVisible', 'isHidden', 'toggleCompleted');
+            this.model.on('change', this.render);
             this.model.on('visible', this.toggleVisible);
+            this.model.on('change:completed', this.toggleVisible);
             this.render();
         },
 
@@ -32,6 +39,10 @@ define([
                 (!isCompleted && App.TodoFilter === 'completed') ||
                     (isCompleted && App.TodoFilter === 'active')
                 );
+        },
+
+        toggleCompleted: function () {
+            this.model.toggle();
         }
     });
 });
