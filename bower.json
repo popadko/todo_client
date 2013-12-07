@@ -1,0 +1,12 @@
+{
+  "name": "todo",
+  "version": "0.0.0",
+  "dependencies": {
+    "requirejs": "~2.*",
+    "backbone": "~1.*",
+    "underscore": "~1.*",
+    "underscore.string": "~2.*",
+    "jquery": "~1.*",
+    "todomvc-common": "~0.1.9"
+  }
+}
