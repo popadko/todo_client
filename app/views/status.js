@@ -10,6 +10,10 @@ define([
     return Backbone.View.extend({
         template: _.template(template),
 
+        events: {
+            'click #clear-completed': 'clearCompleted'
+        },
+
         initialize: function () {
             _.bindAll(this,'render');
             this.collection.on('all',this.render);
@@ -34,6 +38,11 @@ define([
             } else {
                 this.$el.hide();
             }
+        },
+
+        clearCompleted: function(e) {
+            e.preventDefault();
+            _.invoke(this.collection.completed(), 'destroy');
         }
     });
 });
