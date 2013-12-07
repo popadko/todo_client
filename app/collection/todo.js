@@ -9,8 +9,8 @@ define([
         model: TodoModelClass,
 
         completed: function () {
-            return this.filter(function (item) {
-                return item.get('completed');
+            return this.filter(function (model) {
+                return model.get('completed');
             });
         },
 
