@@ -4,7 +4,12 @@ define.amd.jQuery = true;
 define([
     'jquery',
     'underscore',
-    'backbone'
-], function($, _, Backbone) {
-    console.log('Hello World!');
+    'backbone',
+    'app',
+    'router'
+], function($, _, Backbone, App, Router) {
+
+    App.Router = new Router();
+    Backbone.history.start();
+
 });
