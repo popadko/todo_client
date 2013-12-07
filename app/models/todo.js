@@ -5,5 +5,8 @@ define([
 ], function($, _, Backbone) {
 
     return Backbone.Model.extend({
+        defaults: {
+            completed: false
+        }
     });
 });
