@@ -10,6 +10,8 @@ define([
     return Backbone.View.extend({
         template: _.template(template),
 
+        el: '#footer',
+
         events: {
             'click #clear-completed': 'clearCompleted'
         },

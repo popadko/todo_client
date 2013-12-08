@@ -53,7 +53,7 @@ define([
                 return;
             }
 
-            this.collection.create({title: value});
+            App.todoCreate({title: value});
             this.$input.val('');
         }
     });

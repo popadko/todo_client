@@ -8,8 +8,9 @@ define([
     'app',
     'router',
     'views/app',
-    'collection/todo'
-], function ($, _, Backbone, App, Router, AppViewClass, TodoCollectionClass) {
+    'collections/todo',
+    'models/todo'
+], function ($, _, Backbone, App, Router, AppViewClass, TodoCollectionClass, TodoModelClass) {
 
     App.TodoCollection = new TodoCollectionClass();
 
@@ -19,25 +20,34 @@ define([
         collection: App.TodoCollection
     });
 
+    App.todoCreate = function ($data) {
+        var newModel = new TodoModelClass($data);
+        newModel.save();
+    };
+
     App.conn = new WebSocket(App.params.webSocketUrl);
 
-    App.conn.onopen = function() {
+    App.conn.onopen = function () {
         console.log('WebSocket connection open');
     };
 
     App.conn.onmessage = function (e) {
         var message = $.parseJSON(e.data);
-        switch(message.type) {
-            case 'create':
-                App.TodoCollection.add(message.data);
-                break;
+        switch (message.type) {
             case 'delete':
                 var model = App.TodoCollection.get(message.data.id);
-                model.trigger('destroy', model, App.TodoCollection);
+                if (model !== undefined) {
+                    model.trigger('destroy', model, App.TodoCollection);
+                }
                 break;
+            case 'create':
             case 'update':
                 var model = App.TodoCollection.get(message.data.id);
-                model.set(message.data);
+                if (model === undefined) {
+                    App.TodoCollection.add(message.data);
+                } else {
+                    model.set(message.data);
+                }
                 break;
             default:
                 return;
@@ -57,15 +67,15 @@ define([
         };
 
         var create = function () {
-            App.conn.send(JSON.stringify({"type":method, "data":model.toJSON()}));
+            App.conn.send(JSON.stringify({"type": method, "data": model.toJSON()}));
         };
 
         var update = function () {
-            App.conn.send(JSON.stringify({"type":method, "data":model.toJSON()}));
+            App.conn.send(JSON.stringify({"type": method, "data": model.toJSON()}));
         };
 
         var destroy = function () {
-            App.conn.send(JSON.stringify({"type":method, "data":model.toJSON()}));
+            App.conn.send(JSON.stringify({"type": method, "data": model.toJSON()}));
         };
 
         switch (method) {
