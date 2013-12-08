@@ -14,15 +14,18 @@ define([
         template: _.template(template),
 
         events: {
-            'keypress #new-todo': 'createOnEnter'
+            'keypress #new-todo': 'createOnEnter',
+            'click #toggle-all': 'toggleAllComplete'
         },
 
         initialize: function () {
-            _.bindAll(this, 'render', 'addOne', 'filterAll', 'createOnEnter');
+            _.bindAll(this, 'render', 'addOne', 'filterAll', 'createOnEnter', 'toggleAllComplete', 'toggleAllCompleteChecked');
             this.collection.on('add', this.addOne);
             this.collection.on('filter', this.filterAll);
+            this.collection.on('change', this.toggleAllCompleteChecked);
             this.render();
             this.$input = this.$('#new-todo');
+            this.allCheckbox = this.$('#toggle-all')[0];
         },
 
         render: function () {
@@ -55,6 +58,20 @@ define([
 
             App.todoCreate({title: value});
             this.$input.val('');
+        },
+
+        toggleAllCompleteChecked: function (){
+            this.allCheckbox.checked = !this.collection.remaining().length;
+        },
+
+        toggleAllComplete: function (){
+            var completed = this.allCheckbox.checked;
+
+            this.collection.each(function (model) {
+                model.save({
+                    'completed': completed
+                });
+            });
         }
     });
 });
