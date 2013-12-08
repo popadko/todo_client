@@ -27,10 +27,9 @@ define([
 
         render: function () {
             this.$el.html(this.template({}));
-            var statusView = new StatusViewClass({
+            new StatusViewClass({
                 collection: this.collection
             });
-            this.$('#footer').html(statusView.el);
         },
 
         addOne: function (model) {
