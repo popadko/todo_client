@@ -9,9 +9,8 @@ define([
             completed: false
         },
 
-        // TODO must bee save instead of set
         toggle: function () {
-            this.set({
+            this.save({
                 completed: !this.get('completed')
             });
         }

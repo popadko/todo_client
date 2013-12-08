@@ -42,7 +42,6 @@ define([
 
         clearCompleted: function(e) {
             e.preventDefault();
-            //TODO destroy will work after adding sync with server
             _.invoke(this.collection.completed(), 'destroy');
         }
     });

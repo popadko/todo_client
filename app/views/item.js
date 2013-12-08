@@ -12,12 +12,14 @@ define([
         tagName: 'li',
 
         events: {
-            'click .toggle': 'toggleCompleted'
+            'click .toggle': 'toggleCompleted',
+            'click .destroy': 'clear'
         },
 
         initialize: function () {
-            _.bindAll(this, 'render', 'toggleVisible', 'isHidden', 'toggleCompleted');
+            _.bindAll(this, 'render', 'toggleVisible', 'isHidden', 'toggleCompleted', 'clear', 'remove');
             this.model.on('change', this.render);
+            this.model.on('destroy', this.remove);
             this.model.on('visible', this.toggleVisible);
             this.model.on('change:completed', this.toggleVisible);
             this.render();
@@ -43,6 +45,10 @@ define([
 
         toggleCompleted: function () {
             this.model.toggle();
+        },
+
+        clear: function () {
+            this.model.destroy();
         }
     });
 });

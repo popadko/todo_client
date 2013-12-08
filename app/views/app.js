@@ -54,10 +54,8 @@ define([
                 return;
             }
 
-            //TODO must be create instead of add
-            this.collection.add({title: value});
+            this.collection.create({title: value});
             this.$input.val('');
-            console.table(this.collection.models)
         }
     });
 });
