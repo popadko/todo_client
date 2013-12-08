@@ -1,6 +1,6 @@
 define([
     'jquery'
-], function($) {
+], function ($) {
 
     var App = {};
     App.ENTER_KEY = 13;

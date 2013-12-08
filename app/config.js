@@ -7,7 +7,8 @@ var require = {
         underscore           : '../bower_components/underscore/underscore',
         underscoreString     : '../bower_components/underscore.string/lib/underscore.string',
         backbone             : '../bower_components/backbone/backbone',
-        text                 : '../bower_components/text/text'
+        text                 : '../bower_components/text/text',
+        moment               : '../bower_components/momentjs/moment'
     },
     shim: {
         underscore: {

@@ -8,6 +8,7 @@
     "underscore.string": "~2.*",
     "jquery": "~1.*",
     "todomvc-common": "~0.1.9",
-    "text": "~2.*"
+    "text": "~2.*",
+    "momentjs": "~2.*"
   }
 }
