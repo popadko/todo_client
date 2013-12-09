@@ -40,7 +40,27 @@ define([
             var itemView = new ItemViewClass({
                 model: model
             });
-            this.$('#todo-list').prepend(itemView.el);
+            var showed = this.collection.showed();
+            if (showed.length === 0) {
+                this.$('#todo-list').append(itemView.el);
+            } else {
+                var modelTo = showed[0];
+                var isAfter = true;
+                _.each(showed, function (modelShowed) {
+                    var timestamp = modelShowed.get('timestamp');
+                    if (model.get('timestamp') >= timestamp && timestamp >= modelTo.get('timestamp')) {
+                        modelTo = modelShowed;
+                        isAfter = false;
+                    }
+                });
+                var selector = "li[data-id='" + modelTo.id + "']";
+                if (isAfter) {
+                    itemView.$el.insertAfter(this.$(selector));
+                } else {
+                    itemView.$el.insertBefore(this.$(selector));
+                }
+            }
+            model.set({"showed": true});
         },
 
         filterAll: function () {
@@ -61,11 +81,11 @@ define([
             this.$input.val('');
         },
 
-        toggleAllCompleteChecked: function (){
+        toggleAllCompleteChecked: function () {
             this.allCheckbox.checked = !this.collection.remaining().length;
         },
 
-        toggleAllComplete: function (){
+        toggleAllComplete: function () {
             var completed = this.allCheckbox.checked;
 
             this.collection.each(function (model) {
@@ -76,7 +96,7 @@ define([
             });
         },
 
-        connClose: function (){
+        connClose: function () {
             App.conn.close();
         }
     });

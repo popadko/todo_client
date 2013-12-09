@@ -22,6 +22,12 @@ define([
             });
         },
 
+        showed: function () {
+            return this.filter(function (model) {
+                return model.get('showed');
+            });
+        },
+
         remaining: function () {
             return this.filter(function (model) {
                 var changed = model.get('changed');
