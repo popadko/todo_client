@@ -2,9 +2,10 @@ define([
     'jquery',
     'underscore',
     'backbone',
+    'moment',
     'app',
     'text!templates/item.html'
-], function ($, _, Backbone, App, template) {
+], function ($, _, Backbone, moment, App, template) {
 
     return Backbone.View.extend({
         template: _.template(template),
@@ -29,7 +30,13 @@ define([
         },
 
         render: function () {
+            this.$el.attr({"data-id": this.model.id});
             this.$el.html(this.template(this.model.toJSON()));
+            var self = this;
+            self.$('span').html(moment(self.model.get('timestamp')).fromNow());
+            this.timeIntervalId = setInterval(function() {
+                self.$('span').html(moment(self.model.get('timestamp')).fromNow());
+            }, 1000);
             this.$el.toggleClass('completed', this.model.get('completed'));
             this.toggleVisible();
             this.$input = this.$('.edit');
@@ -76,6 +83,7 @@ define([
         },
 
         clear: function () {
+            clearInterval(this.timeIntervalId);
             this.model.destroy();
         }
     });

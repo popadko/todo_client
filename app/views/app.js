@@ -39,7 +39,7 @@ define([
             var itemView = new ItemViewClass({
                 model: model
             });
-            this.$('#todo-list').append(itemView.el);
+            this.$('#todo-list').prepend(itemView.el);
         },
 
         filterAll: function () {
