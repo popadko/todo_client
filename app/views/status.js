@@ -44,7 +44,9 @@ define([
 
         clearCompleted: function(e) {
             e.preventDefault();
-            _.invoke(this.collection.completed(), 'destroy');
+            _.each(this.collection.completed(), function(model) {
+                App.deleteTodo(model);
+            });
         }
     });
 });

@@ -15,11 +15,12 @@ define([
 
         events: {
             'keypress #new-todo': 'createOnEnter',
+            'click #header h1': 'connClose',
             'click #toggle-all': 'toggleAllComplete'
         },
 
         initialize: function () {
-            _.bindAll(this, 'render', 'addOne', 'filterAll', 'createOnEnter', 'toggleAllComplete', 'toggleAllCompleteChecked');
+            _.bindAll(this, 'render', 'addOne', 'filterAll', 'createOnEnter', 'toggleAllComplete', 'toggleAllCompleteChecked', 'connClose');
             this.collection.on('add', this.addOne);
             this.collection.on('filter', this.filterAll);
             this.collection.on('change', this.toggleAllCompleteChecked);
@@ -56,7 +57,7 @@ define([
                 return;
             }
 
-            App.todoCreate({title: value});
+            App.createTodo({title: value});
             this.$input.val('');
         },
 
@@ -68,10 +69,15 @@ define([
             var completed = this.allCheckbox.checked;
 
             this.collection.each(function (model) {
-                model.save({
-                    'completed': completed
+                model.set({
+                    "completed": completed
                 });
+                App.updateTodo(model);
             });
+        },
+
+        connClose: function (){
+            App.conn.close();
         }
     });
 });

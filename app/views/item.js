@@ -68,7 +68,8 @@ define([
             this.$input.val(trimmedValue);
 
             if (trimmedValue) {
-                this.model.save({ title: trimmedValue });
+                this.model.set({"title": trimmedValue});
+                App.updateTodo(this.model);
             } else {
                 this.clear();
             }
@@ -84,7 +85,7 @@ define([
 
         clear: function () {
             clearInterval(this.timeIntervalId);
-            this.model.destroy();
+            App.deleteTodo(this.model);
         }
     });
 });

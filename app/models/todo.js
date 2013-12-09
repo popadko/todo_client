@@ -1,12 +1,14 @@
 define([
     'jquery',
     'underscore',
-    'backbone'
-], function($, _, Backbone) {
+    'backbone',
+    'app'
+], function($, _, Backbone, App) {
 
     return Backbone.Model.extend({
         defaults: {
-            completed: false
+            "completed": false,
+            "sync":false
         },
 
         initialize: function () {
@@ -14,9 +16,8 @@ define([
         },
 
         toggle: function () {
-            this.save({
-                completed: !this.get('completed')
-            });
+            this.set({completed: !this.get('completed')});
+            App.updateTodo(this);
         },
 
         setTimestamp: function() {
