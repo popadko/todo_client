@@ -7,8 +7,9 @@
     "underscore": "~1.*",
     "underscore.string": "~2.*",
     "jquery": "~1.*",
-    "todomvc-common": "~0.1.9",
+    "todomvc-common": "~0.1.*",
     "text": "~2.*",
-    "momentjs": "~2.*"
+    "momentjs": "~2.*",
+    "backbone.localStorage": "~1.1.*"
   }
 }
