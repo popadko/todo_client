@@ -33,9 +33,9 @@ define([
             this.$el.attr({"data-id": this.model.id});
             this.$el.html(this.template(this.model.toJSON()));
             var self = this;
-            self.$('span').html(moment(self.model.get('timestamp')).fromNow());
+            self.$('span').html(self.dateFormat(self.model.get('timestamp')));
             this.timeIntervalId = setInterval(function() {
-                self.$('span').html(moment(self.model.get('timestamp')).fromNow());
+                self.$('span').html(self.dateFormat(self.model.get('timestamp')));
             }, 1000);
             this.$el.toggleClass('completed', this.model.get('completed'));
             this.toggleVisible();
@@ -86,6 +86,23 @@ define([
         clear: function () {
             clearInterval(this.timeIntervalId);
             App.deleteTodo(this.model);
+        },
+
+        dateFormat: function (date, dateFormat) {
+            var momentObj=moment(date);
+            var now=moment();
+            var diff=now.diff(momentObj);
+            var nowDay=moment(now).startOf('day');
+            if(diff>(24*60*60*1000+now-nowDay)||diff<0){
+                momentObj=moment(momentObj).format(!!dateFormat?dateFormat:'lll');
+            }
+            else if(diff>60*60*1000){
+                momentObj=moment(momentObj).calendar();
+            }
+            else {
+                momentObj= moment(momentObj).fromNow();
+            }
+            return momentObj;
         }
     });
 });
