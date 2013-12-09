@@ -4,7 +4,7 @@
     mainConfigFile: '../app/config.js',
 //    optimize: 'none',
     optimize: 'uglify2',
-    preserveLicenseComments: true,
+    preserveLicenseComments: false,
     inlineText: true,
     modules:[
         {
