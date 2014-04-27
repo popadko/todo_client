@@ -23,8 +23,8 @@ define([
         },
 
         setTimestamp: function() {
-            if(this.id) {
-                this.set({"timestamp": parseInt(this.id.slice(0, 8), 16) * 1000});
+            if (this.id) {
+                this.set({"timestamp": this.get("create") * 1000});
             } else {
                 this.set({"timestamp": (new Date()).getTime()});
             }

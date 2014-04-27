@@ -1,0 +1,23 @@
+{
+  "version": "0.9.1",
+  "name": "todo-olegus",
+  "description": "Simple todo app",
+
+  "preferGlobal": false,
+  "author": "Oleg Popadko <oleg.popadko@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olegpopadko/todo_client.git"
+  },
+  "bugs": {
+    "email": "oleg.popadko@gmail.com",
+    "url": "https://github.com/olegpopadko/todo_client/issues"
+  },
+  "dependencies": {
+      "requirejs": "2.1.*",
+      "bower": "*"
+  },
+  "scripts": {
+    "postinstall": "./cook.sh"
+  }
+}

@@ -45,4 +45,8 @@ nb-configuration.xml
 /*.sublime-project
 *.sublime-workspace
 
+# node
+node_modules
+node_modules/*
+
 /app_build

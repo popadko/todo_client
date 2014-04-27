@@ -1,6 +1,6 @@
 {
   "name": "todo",
-  "version": "0.0.0",
+  "version": "0.9.1",
   "dependencies": {
     "requirejs": "~2.*",
     "backbone": "~1.*",

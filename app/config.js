@@ -3,7 +3,7 @@
 
 var require = {
     paths: {
-        jquery               : '../bower_components/jquery/jquery',
+        jquery               : '../bower_components/jquery/dist/jquery',
         underscore           : '../bower_components/underscore/underscore',
         underscoreString     : '../bower_components/underscore.string/lib/underscore.string',
         backbone             : '../bower_components/backbone/backbone',
