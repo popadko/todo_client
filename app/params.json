@@ -1,0 +1,4 @@
+{
+    "todoWebSocketHost": "localhost",
+    "todoWebSocketPort": "8080"
+}

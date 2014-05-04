@@ -109,7 +109,7 @@ define([
     }
 
     var start = function () {
-        App.conn = new WebSocket(App.params.webSocketUrl);
+        App.conn = new WebSocket("ws://" + App.params.todoWebSocketHost + ":" + App.params.todoWebSocketPort);
 
         App.conn.onopen = function () {
             App.goOnline();

@@ -4,16 +4,20 @@
   "description": "Simple todo app",
 
   "preferGlobal": false,
-  "author": "Oleg Popadko <oleg.popadko@gmail.com>",
+  "author": "Oleg Popadko <oleg.popadko@icloud.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/olegpopadko/todo_client.git"
   },
   "bugs": {
-    "email": "oleg.popadko@gmail.com",
+    "email": "oleg.popadko@icloud.com",
     "url": "https://github.com/olegpopadko/todo_client/issues"
   },
+  "engines": {
+      "node": "0.10.x"
+  },
   "dependencies": {
+      "mime": "*",
       "requirejs": "2.1.*",
       "bower": "*"
   },
