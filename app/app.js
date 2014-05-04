@@ -1,12 +1,11 @@
 define([
-    'jquery'
-], function ($) {
+    'jquery',
+    'text!params.json'
+], function ($, params) {
 
     var App = {};
     App.ENTER_KEY = 13;
-    App.params = {
-        "webSocketUrl": 'ws://localhost:8080'
-    };
+    App.params = JSON.parse(params);
 
     return App;
 });
