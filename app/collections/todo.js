@@ -4,7 +4,7 @@ define([
     'backbone',
     'localStorage',
     'models/todo'
-], function($, _, Backbone, localStorage, TodoModelClass) {
+], function ($, _, Backbone, localStorage, TodoModelClass) {
 
     return Backbone.Collection.extend({
         model: TodoModelClass,
@@ -14,7 +14,7 @@ define([
         completed: function () {
             return this.filter(function (model) {
                 var changed = model.get('changed');
-                if(changed !== undefined) {
+                if (changed !== undefined) {
                     return model.get('completed') && changed !== 'deleted';
                 } else {
                     return model.get('completed');
@@ -31,7 +31,7 @@ define([
         remaining: function () {
             return this.filter(function (model) {
                 var changed = model.get('changed');
-                if(changed !== undefined) {
+                if (changed !== undefined) {
                     return !model.get('completed') && changed !== 'deleted';
                 } else {
                     return !model.get('completed');

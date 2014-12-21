@@ -6,7 +6,7 @@
     optimize: 'uglify2',
     preserveLicenseComments: false,
     inlineText: true,
-    modules:[
+    modules: [
         {
             name: 'main'
         }

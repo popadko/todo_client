@@ -3,17 +3,17 @@ define([
     'underscore',
     'backbone',
     'app'
-], function($, _, Backbone, App) {
+], function ($, _, Backbone, App) {
 
     return Backbone.Model.extend({
         defaults: {
             "showed": false,
             "completed": false,
-            "sync":false
+            "sync": false
         },
 
         initialize: function () {
-            this.set({"showed":false});
+            this.set({"showed": false});
             this.setTimestamp();
         },
 
@@ -22,7 +22,7 @@ define([
             App.updateTodo(this);
         },
 
-        setTimestamp: function() {
+        setTimestamp: function () {
             if (this.id) {
                 this.set({"timestamp": this.get("create") * 1000});
             } else {

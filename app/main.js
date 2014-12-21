@@ -20,22 +20,21 @@ define([
     });
 
     App.online = false;
-    App.syncDeleted = function() {
+    App.syncDeleted = function () {
         var data = App.TodoCollection.toJSON();
-        _.each(data, function(item) {
-            if(item.sync === false)
-            {
+        _.each(data, function (item) {
+            if (item.sync === false) {
                 App.TodoCollection.get(item.id).destroy();
             }
         });
-    }
-    App.goOnline = function() {
+    };
+    App.goOnline = function () {
         App.online = true;
         var data = App.TodoCollection.toJSON();
-        _.each(data, function(item) {
+        _.each(data, function (item) {
             var action = item.changed;
-            if(action) {
-                switch(action) {
+            if (action) {
+                switch (action) {
                     case 'created':
                         App.TodoCollection.get(item.id).destroy();
                         delete item.changed;
@@ -52,27 +51,27 @@ define([
                 }
             }
         });
-    }
-    App.goOffline = function(callback) {
+    };
+    App.goOffline = function (callback) {
         App.online = false;
-        App.TodoCollection.each(function(model) {
-            model.save({"sync":false},{silent: true});
-        })
-        if(callback !== undefined) {
+        App.TodoCollection.each(function (model) {
+            model.save({"sync": false}, {silent: true});
+        });
+        if (callback !== undefined) {
             callback();
         }
-    }
+    };
 
     App.createTodo = function (data) {
         data.update = (new Date()).getTime();
         if (App.online) {
-            var tmp = new App.TodoCollection.model(data)
+            var tmp = new App.TodoCollection.model(data);
             App.conn.send(JSON.stringify({"type": 'create', "data": tmp.toJSON()}));
         } else {
             data.changed = 'created';
             App.TodoCollection.create(data);
         }
-    }
+    };
 
     App.deleteTodo = function (model) {
         if (App.online) {
@@ -80,7 +79,7 @@ define([
             model.destroy();
         } else {
             var action = model.get('changed');
-            if(action !== undefined) {
+            if (action !== undefined) {
                 model.destroy();
             } else {
                 data = {};
@@ -90,11 +89,11 @@ define([
             }
 
         }
-    }
+    };
 
     App.updateTodo = function (model) {
         var action = model.get('changed');
-        if(action === undefined) {
+        if (action === undefined) {
             model.set({"update": (new Date()).getTime()});
         } else {
             model.unset('changed', {"silent": true});
@@ -106,7 +105,7 @@ define([
             model.set({"changed": 'updated'});
         }
         model.save();
-    }
+    };
 
     var start = function () {
         App.conn = new WebSocket("ws://" + App.params.todoWebSocketHost + ":" + App.params.todoWebSocketPort);
@@ -117,17 +116,19 @@ define([
         };
 
         App.conn.onmessage = function (e) {
-            var message = $.parseJSON(e.data);
+            var message = $.parseJSON(e.data),
+                model;
+
             switch (message.type) {
                 case 'delete':
-                    var model = App.TodoCollection.get(message.data.id);
+                    model = App.TodoCollection.get(message.data.id);
                     if (model !== undefined) {
                         model.destroy();
                     }
                     break;
                 case 'create':
                 case 'update':
-                    var model = App.TodoCollection.get(message.data.id);
+                    model = App.TodoCollection.get(message.data.id);
                     message.data.sync = true;
                     if (model === undefined) {
                         App.TodoCollection.create(message.data);
@@ -150,11 +151,13 @@ define([
         App.conn.onclose = function () {
             App.goOffline();
             setTimeout(function () {
-                start()
+                start();
             }, 10000);
         };
-    }
-    App.TodoCollection.fetch({success: function () {
-        App.goOffline(start);
-    }})
+    };
+    App.TodoCollection.fetch({
+        success: function () {
+            App.goOffline(start);
+        }
+    })
 });

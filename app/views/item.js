@@ -34,7 +34,7 @@ define([
             this.$el.html(this.template(this.model.toJSON()));
             var self = this;
             self.$('span').html(self.dateFormat(self.model.get('timestamp')));
-            this.timeIntervalId = setInterval(function() {
+            this.timeIntervalId = setInterval(function () {
                 self.$('span').html(self.dateFormat(self.model.get('timestamp')));
             }, 1000);
             this.$el.toggleClass('completed', this.model.get('completed'));
@@ -48,10 +48,8 @@ define([
 
         isHidden: function () {
             var isCompleted = this.model.get('completed');
-            return (// hidden cases only
-                (!isCompleted && App.TodoFilter === 'completed') ||
-                    (isCompleted && App.TodoFilter === 'active')
-                );
+            // hidden cases only
+            return ((!isCompleted && App.TodoFilter === 'completed') || (isCompleted && App.TodoFilter === 'active'));
         },
 
         toggleCompleted: function () {
@@ -89,18 +87,18 @@ define([
         },
 
         dateFormat: function (date, dateFormat) {
-            var momentObj=moment(date);
-            var now=moment();
-            var diff=now.diff(momentObj);
-            var nowDay=moment(now).startOf('day');
-            if(diff>(24*60*60*1000+now-nowDay)||diff<0){
-                momentObj=moment(momentObj).format(!!dateFormat?dateFormat:'lll');
+            var momentObj = moment(date);
+            var now = moment();
+            var diff = now.diff(momentObj);
+            var nowDay = moment(now).startOf('day');
+            if (diff > (24 * 60 * 60 * 1000 + now - nowDay) || diff < 0) {
+                momentObj = moment(momentObj).format(!!dateFormat ? dateFormat : 'lll');
             }
-            else if(diff>60*60*1000){
-                momentObj=moment(momentObj).calendar();
+            else if (diff > 60 * 60 * 1000) {
+                momentObj = moment(momentObj).calendar();
             }
             else {
-                momentObj= moment(momentObj).fromNow();
+                momentObj = moment(momentObj).fromNow();
             }
             return momentObj;
         }

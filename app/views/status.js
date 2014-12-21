@@ -5,7 +5,7 @@ define([
     'app',
     'text!templates/status.html',
     'views/status'
-], function($, _, Backbone, App, template) {
+], function ($, _, Backbone, App, template) {
 
     return Backbone.View.extend({
         template: _.template(template),
@@ -17,12 +17,12 @@ define([
         },
 
         initialize: function () {
-            _.bindAll(this,'render');
-            this.collection.on('all',this.render);
+            _.bindAll(this, 'render');
+            this.collection.on('all', this.render);
             this.render();
         },
 
-        render: function() {
+        render: function () {
             var completed = this.collection.completed().length;
             var remaining = this.collection.remaining().length;
             if (this.collection.length) {
@@ -42,9 +42,9 @@ define([
             }
         },
 
-        clearCompleted: function(e) {
+        clearCompleted: function (e) {
             e.preventDefault();
-            _.each(this.collection.completed(), function(model) {
+            _.each(this.collection.completed(), function (model) {
                 App.deleteTodo(model);
             });
         }
