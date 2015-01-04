@@ -13,12 +13,7 @@ define([
 
         completed: function () {
             return this.filter(function (model) {
-                var changed = model.get('changed');
-                if (changed !== undefined) {
-                    return model.get('completed') && changed !== 'deleted';
-                } else {
-                    return model.get('completed');
-                }
+                return model.get('completed');
             });
         },
 
@@ -30,12 +25,7 @@ define([
 
         remaining: function () {
             return this.filter(function (model) {
-                var changed = model.get('changed');
-                if (changed !== undefined) {
-                    return !model.get('completed') && changed !== 'deleted';
-                } else {
-                    return !model.get('completed');
-                }
+                return !model.get('completed');
             });
         }
     });

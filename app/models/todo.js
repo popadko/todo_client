@@ -1,9 +1,8 @@
 define([
     'jquery',
     'underscore',
-    'backbone',
-    'app'
-], function ($, _, Backbone, App) {
+    'backbone'
+], function ($, _, Backbone) {
 
     return Backbone.Model.extend({
         defaults: {
@@ -17,9 +16,18 @@ define([
             this.setTimestamp();
         },
 
+        save: function(attributes, options) {
+            attributes || (attributes = {});
+            if (this.isNew) {
+                attributes['created_at'] = (new Date()).getTime();
+            }
+            attributes['updated_at'] = (new Date()).getTime();
+            Backbone.Model.prototype.save.call(this, attributes, options);
+        },
+
         toggle: function () {
             this.set({completed: !this.get('completed')});
-            App.updateTodo(this);
+            this.save();
         },
 
         setTimestamp: function () {

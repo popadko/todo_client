@@ -77,7 +77,7 @@ define([
                 return;
             }
 
-            App.createTodo({title: value});
+            this.collection.create({title: value});
             this.$input.val('');
         },
 
@@ -92,7 +92,7 @@ define([
                 model.set({
                     "completed": completed
                 });
-                App.updateTodo(model);
+                model.save();
             });
         },
 

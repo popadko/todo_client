@@ -67,7 +67,7 @@ define([
 
             if (trimmedValue) {
                 this.model.set({"title": trimmedValue});
-                App.updateTodo(this.model);
+                this.model.save();
             } else {
                 this.clear();
             }
@@ -83,7 +83,7 @@ define([
 
         clear: function () {
             clearInterval(this.timeIntervalId);
-            App.deleteTodo(this.model);
+            this.model.destroy();
         },
 
         dateFormat: function (date, dateFormat) {

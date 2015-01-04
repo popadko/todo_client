@@ -1,4 +1,5 @@
 {
   "todoWebSocketHost": "localhost",
-  "todoWebSocketPort": "8080"
+  "todoWebSocketPort": "30000",
+  "todoWebSocketReconnectTimeout": "10000"
 }
