@@ -18,11 +18,16 @@ define([
 
         save: function(attributes, options) {
             attributes || (attributes = {});
-            if (this.isNew) {
+            if (this.isNew()) {
                 attributes['created_at'] = (new Date()).getTime();
             }
             attributes['updated_at'] = (new Date()).getTime();
             Backbone.Model.prototype.save.call(this, attributes, options);
+        },
+
+        destroy: function(options) {
+            this.set({"deleted_at": (new Date()).getTime()});
+            Backbone.Model.prototype.destroy.call(this, options);
         },
 
         toggle: function () {
@@ -32,7 +37,7 @@ define([
 
         setTimestamp: function () {
             if (this.id) {
-                this.set({"timestamp": this.get("create") * 1000});
+                this.set({"timestamp": this.get("created_at")});
             } else {
                 this.set({"timestamp": (new Date()).getTime()});
             }
