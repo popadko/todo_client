@@ -30,7 +30,11 @@ define([
                 model = item;
             }
             _.each(model.models, function (model) {
-                App.conn.send(JSON.stringify(model.toJSON()));
+                if (model.get("from_server") === undefined) {
+                    App.conn.send(JSON.stringify(model.toJSON()));
+                } else {
+                    model.unset("from_server", {silent: true});
+                }
             })
         }
     });
@@ -39,17 +43,43 @@ define([
         App.conn = new WebSocket("ws://" + App.params.todoWebSocketHost + ":" + App.params.todoWebSocketPort);
 
         App.conn.onopen = function () {
-            //App.online = true;
+            App.online = true;
+            /**
+             * On reconnect we must sync all models changed offline
+             * That why on app load we have duplicate syncs
+             */
+            App.TodoCollection.fetch();
         };
 
         App.conn.onmessage = function (e) {
-            //var message = $.parseJSON(e.data);
+            var message = $.parseJSON(e.data),
+                model = App.TodoCollection.get(message.id);
+
+            message.from_server = true;
+            if (model === undefined) {
+                if (message.deleted_at === undefined) {
+                    App.TodoCollection.create(message);
+                }
+            } else if (message.deleted_at !== undefined) {
+                model.set(message);
+                model.destroy();
+            } else if (model.get("updated_at") < message.updated_at) {
+                model.set(message);
+                model.save();
+            } else {
+                /**
+                 * If model.get("updated_at") bigger then message.updated_at
+                 * we need send this model to others clients
+                 */
+                model.save();
+            }
         };
 
         App.conn.onerror = function (error) {
             console.error(error);
             App.conn.close();
         };
+
         App.conn.onclose = function () {
             App.online = false;
             setTimeout(function () {
@@ -57,6 +87,7 @@ define([
             }, App.params.todoWebSocketReconnectTimeout);
         };
     };
+
     App.TodoCollection.fetch({
         success: function () {
             start();
