@@ -12,7 +12,6 @@ define([
 
         initialize: function () {
             this.set({"showed": false});
-            this.setTimestamp();
         },
 
         save: function(attributes, options) {
@@ -36,15 +35,6 @@ define([
         toggle: function () {
             this.set({completed: !this.get('completed')});
             this.save();
-        },
-
-        setTimestamp: function () {
-            if (this.id) {
-                this.set({"timestamp": this.get("created_at")});
-            } else {
-                this.set({"timestamp": (new Date()).getTime()});
-            }
-
         }
     });
 });

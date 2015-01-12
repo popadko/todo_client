@@ -33,9 +33,9 @@ define([
             this.$el.attr({"data-id": this.model.id});
             this.$el.html(this.template(this.model.toJSON()));
             var self = this;
-            self.$('span').html(self.dateFormat(self.model.get('timestamp')));
+            self.$('span').html(self.dateFormat(self.model.get('created_at')));
             this.timeIntervalId = setInterval(function () {
-                self.$('span').html(self.dateFormat(self.model.get('timestamp')));
+                self.$('span').html(self.dateFormat(self.model.get('created_at')));
             }, 1000);
             this.$el.toggleClass('completed', this.model.get('completed'));
             this.toggleVisible();
@@ -87,6 +87,7 @@ define([
         },
 
         dateFormat: function (date, dateFormat) {
+            //return date;
             var momentObj = moment(date);
             var now = moment();
             var diff = now.diff(momentObj);

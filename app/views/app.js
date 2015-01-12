@@ -41,14 +41,15 @@ define([
                 model: model
             });
             var showed = this.collection.showed();
+            console.log(showed.length);
             if (showed.length === 0) {
                 this.$('#todo-list').append(itemView.el);
             } else {
                 var modelTo = showed[0];
                 var isAfter = true;
                 _.each(showed, function (modelShowed) {
-                    var timestamp = modelShowed.get('timestamp');
-                    if (model.get('timestamp') >= timestamp && timestamp >= modelTo.get('timestamp')) {
+                    var timestamp = modelShowed.get('created_at');
+                    if (model.get('created_at') >= timestamp && timestamp >= modelTo.get('created_at')) {
                         modelTo = modelShowed;
                         isAfter = false;
                     }

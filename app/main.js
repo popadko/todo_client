@@ -48,7 +48,7 @@ define([
              * On reconnect we must sync all models changed offline
              * That why on app load we have duplicate syncs
              */
-            App.TodoCollection.fetch();
+            //App.TodoCollection.fetch();
         };
 
         App.conn.onmessage = function (e) {
@@ -65,12 +65,6 @@ define([
                 model.destroy();
             } else if (model.get("updated_at") < message.updated_at) {
                 model.set(message);
-                model.save();
-            } else {
-                /**
-                 * If model.get("updated_at") bigger then message.updated_at
-                 * we need send this model to others clients
-                 */
                 model.save();
             }
         };
