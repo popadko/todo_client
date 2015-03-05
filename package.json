@@ -2,9 +2,8 @@
   "version": "0.9.1",
   "name": "todo-olegus",
   "description": "Simple todo app",
-
   "preferGlobal": false,
-  "author": "Oleg Popadko <oleg.popadko@icloud.com>",
+  "author": "Oleg Popadko <oleg@popadko.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/olegpopadko/todo_client.git"
@@ -14,12 +13,13 @@
     "url": "https://github.com/olegpopadko/todo_client/issues"
   },
   "engines": {
-      "node": "0.10.x"
+    "node": "0.12.x"
   },
   "dependencies": {
-      "mime": "*",
-      "requirejs": "2.1.*",
-      "bower": "*"
+    "bower": "*",
+    "mime": "*",
+    "path": "*",
+    "requirejs": "2.1.*"
   },
   "scripts": {
     "postinstall": "./cook.sh"
